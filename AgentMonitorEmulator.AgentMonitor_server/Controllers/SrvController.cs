@@ -15,7 +15,7 @@ namespace AgentMonitorEmulator.AgentMonitor_server.Controllers
         public static string ServerRsaPublicKey = "654321";
 
         [Route("srv")]
-        [AcceptVerbs("CONNECT")]
+        [AcceptVerbs("_CONNECT")]
         public HttpResponseMessage Connect()
         {
             try
@@ -34,7 +34,7 @@ namespace AgentMonitorEmulator.AgentMonitor_server.Controllers
                     .ToString()
                     .Take(8);
                 string agentid = string.Join("", guid);
-                response.Headers.Add("agentid", agentid);
+                response.Headers.Add(nameof(agentid), agentid);
                 return response;
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace AgentMonitorEmulator.AgentMonitor_server.Controllers
                             .Encrypt(
                                 Encoding.UTF8
                                     .GetBytes(key + ServerRsaPublicKey), RSAEncryptionPadding.OaepSHA1));
-                response.Headers.Add("token", token);
+                response.Headers.Add(nameof(token), token);
                 return response;
             }
             catch (Exception ex)
